@@ -1,83 +1,107 @@
-// src/components/BMICalculator.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FaWeight, FaRulerVertical, FaHeartbeat } from 'react-icons/fa';
 
 const BMICalculator = () => {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [bmi, setBmi] = useState(null);
   const [category, setCategory] = useState('');
+  const [color, setColor] = useState('text-blue-700');
 
   const calculateBMI = () => {
     const heightInMeter = height / 100;
     const result = weight / (heightInMeter * heightInMeter);
-    setBmi(result.toFixed(2));
+    const rounded = result.toFixed(2);
+    setBmi(rounded);
 
-    if (result < 18.5) setCategory('Kurus');
-    else if (result < 24.9) setCategory('Normal');
-    else if (result < 29.9) setCategory('Gemuk');
-    else setCategory('Obesitas');
+    if (result < 18.5) {
+      setCategory('Kurus 😟');
+      setColor('text-yellow-600');
+    } else if (result < 24.9) {
+      setCategory('Normal 😊');
+      setColor('text-green-600');
+    } else if (result < 29.9) {
+      setCategory('Gemuk 😅');
+      setColor('text-orange-600');
+    } else {
+      setCategory('Obesitas 😱');
+      setColor('text-red-600');
+    }
   };
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center px-4">
+    <section className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex flex-col justify-between items-center">
+      {/* Hero */}
+      <header className="text-center pt-12 pb-6">
+        <motion.h1
+          className="text-4xl md:text-5xl font-extrabold text-purple-800 drop-shadow-sm"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          🧮 Kalkulator BMI
+        </motion.h1>
+        <p className="text-gray-600 mt-2">Hitung indeks massa tubuhmu & lihat hasilnya!</p>
+      </header>
+
+      {/* Kalkulator */}
       <motion.div
-        className="bg-white shadow-2xl rounded-2xl p-8 max-w-md w-full"
+        className="bg-white shadow-2xl rounded-2xl px-8 py-10 w-[90%] max-w-md mb-8"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7 }}
       >
-        <motion.header
-          className="mb-6"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h1 className="text-3xl font-bold text-center text-gray-800">
-            Kalkulator BMI
-          </h1>
-          <p className="text-center text-sm text-gray-500 mt-1">Cek kesehatan tubuhmu sekarang</p>
-        </motion.header>
+        <div className="space-y-5">
+          <div className="flex items-center gap-3">
+            <FaWeight className="text-blue-500 text-xl" />
+            <input
+              type="number"
+              placeholder="Berat badan (kg)"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
 
-        <div className="space-y-4">
-          <motion.input
-            type="number"
-            placeholder="Berat (kg)"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-            whileFocus={{ scale: 1.02 }}
-          />
-          <motion.input
-            type="number"
-            placeholder="Tinggi (cm)"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-            whileFocus={{ scale: 1.02 }}
-          />
+          <div className="flex items-center gap-3">
+            <FaRulerVertical className="text-green-500 text-xl" />
+            <input
+              type="number"
+              placeholder="Tinggi badan (cm)"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+          </div>
+
           <motion.button
             onClick={calculateBMI}
-            className="w-full bg-blue-500 text-white font-semibold py-3 rounded-xl hover:bg-blue-600 transition"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Hitung
+            Hitung Sekarang 💪
           </motion.button>
 
           {bmi && (
             <motion.div
-              className="mt-4 bg-blue-100 border-l-4 border-blue-500 p-4 rounded-xl text-blue-800"
+              className={`mt-4 border-l-4 p-4 rounded-xl bg-white shadow-md ${color}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              <p className="font-medium text-lg">BMI: {bmi}</p>
-              <p className="text-sm">Kategori: {category}</p>
+              <p className="font-bold text-xl">BMI Kamu: {bmi}</p>
+              <p className="text-md font-medium">Kategori: {category}</p>
             </motion.div>
           )}
         </div>
       </motion.div>
+
+      {/* Footer */}
+      <footer className="text-sm text-gray-500 pb-4 text-center">
+        Dibuat dengan ❤️ oleh imagham — 2025
+      </footer>
     </section>
   );
 };
