@@ -19,13 +19,19 @@ const BMICalculator = () => {
   };
 
   return (
-    <div>
-      <h2>Kalkulator BMI</h2>
-      <input type="number" placeholder="Berat (kg)" value={weight} onChange={(e) => setWeight(e.target.value)} />
-      <input type="number" placeholder="Tinggi (cm)" value={height} onChange={(e) => setHeight(e.target.value)} />
-      <button onClick={calculateBMI}>Hitung</button>
-      {bmi && <p>BMI: {bmi} - {category}</p>}
-    </div>
+    <section>
+        <header>
+          <h1>Kalkulator BMI</h1>
+        </header>
+        <div>
+          <h2>Kalkulator BMI</h2>
+          <input type="number" placeholder="Berat (kg)" value={weight} onChange={(e) => setWeight(e.target.value)} />
+          <input type="number" placeholder="Tinggi (cm)" value={height} onChange={(e) => setHeight(e.target.value)} />
+          <button onClick={calculateBMI}>Hitung</button>
+          {bmi && <p>BMI: {bmi} - {category}</p>}
+        </div>
+         
+    </section>
   );
 };
 
