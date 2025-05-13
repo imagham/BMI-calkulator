@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FaWeight, FaRulerVertical, FaHeartbeat } from 'react-icons/fa';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { FaWeight, FaRulerVertical, FaHeartbeat } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const BMICalculator = () => {
-  const [weight, setWeight] = useState('');
-  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
   const [bmi, setBmi] = useState(null);
-  const [category, setCategory] = useState('');
-  const [color, setColor] = useState('text-blue-700');
+  const [category, setCategory] = useState("");
+  const [color, setColor] = useState("text-blue-700");
 
   const calculateBMI = () => {
     const heightInMeter = height / 100;
@@ -16,17 +17,17 @@ const BMICalculator = () => {
     setBmi(rounded);
 
     if (result < 18.5) {
-      setCategory('Kurus 😟');
-      setColor('text-yellow-600');
+      setCategory("Kurus 😟");
+      setColor("text-yellow-600");
     } else if (result < 24.9) {
-      setCategory('Normal 😊');
-      setColor('text-green-600');
+      setCategory("Normal 😊");
+      setColor("text-green-600");
     } else if (result < 29.9) {
-      setCategory('Gemuk 😅');
-      setColor('text-orange-600');
+      setCategory("Gemuk 😅");
+      setColor("text-orange-600");
     } else {
-      setCategory('Obesitas 😱');
-      setColor('text-red-600');
+      setCategory("Obesitas 😱");
+      setColor("text-red-600");
     }
   };
 
@@ -42,7 +43,9 @@ const BMICalculator = () => {
         >
           🧮 Kalkulator BMI
         </motion.h1>
-        <p className="text-gray-600 mt-2">Hitung indeks massa tubuhmu & lihat hasilnya!</p>
+        <p className="text-gray-600 mt-2">
+          Hitung indeks massa tubuhmu & lihat hasilnya!
+        </p>
       </header>
 
       {/* Kalkulator */}
@@ -95,6 +98,17 @@ const BMICalculator = () => {
               <p className="text-md font-medium">Kategori: {category}</p>
             </motion.div>
           )}
+        </div>
+        <div className="text-center mt-6">
+          <Link to="/detail">
+            <motion.button
+              className="bg-pink-400 text-white px-6 py-2 rounded-xl shadow-md hover:bg-pink-500 transition"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              💡 Tips Hidup Sehat
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
 
